@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import org.json.JSONException
+import org.json.JSONObject
 import org.skyscreamer.jsonassert.JSONCompare.compareJSON
 import org.skyscreamer.jsonassert.JSONCompareMode
 
@@ -58,6 +59,13 @@ fun App() {
                 }) {
                     Text("Compare")
                 }
+                Spacer(modifier = Modifier.size(padding))
+                Button(onClick = {
+                    json1 = pretty(json1)
+                    json2 = pretty(json2)
+                }) {
+                    Text("Pretty")
+                }
             }
             if (result.isNotBlank()) {
                 Row {
@@ -73,6 +81,12 @@ fun App() {
         }
     }
 }
+
+fun pretty(json: String): String {
+    val jsonObject = JSONObject(json)
+    return jsonObject.toString(4)
+}
+
 
 fun compareJSON(json1: String, json2: String): String {
     return try {
